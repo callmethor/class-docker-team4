@@ -4,17 +4,17 @@ services:
     image: euclid1990/ubuntu-server
     volumes:
       - ./blog:/var/www/html/blog
-  mariadb:
-    image: mariadb
-    ports:
-      - "3696:3306"
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: mydb
       MYSQL_USER: guest
-      MYSQL_PASSWORD: 123456Aa@
+      MYSQL_PASSWORD: 123456
     volumes:
-      - ./mariadb:/var/lib/mysql
+      - ./database:/var/lib/mysql
   php:
     image: euclid1990/php5.6-fpm
     ports:
@@ -22,7 +22,7 @@ services:
     volumes_from:
       - application
     links:
-      - mariadb:mysql
+      - mysql:mysql
   nginx:
     image: nginx
     ports:
