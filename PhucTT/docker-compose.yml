@@ -19,6 +19,7 @@ services:
     volumes:
       - ./Docker/php/config/config.ini:/usr/local/etc/php/conf.d/uploads.ini
     restart: always
+    user: phuc:phuc
   mysql:
     image: mysql
     networks:
