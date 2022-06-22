@@ -24,10 +24,7 @@ services:
       - ./Docker/php/config/config.ini:/usr/local/etc/php/conf.d/uploads.ini
     container_name: phuctt-php
     restart: always
-<<<<<<< HEAD
 
-=======
->>>>>>> 1492790719a223a10d76321bb456a6b789e51d7c
     user: phuc:phuc
   mysql:
     image: mysql
