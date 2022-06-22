@@ -8,7 +8,10 @@ services:
     networks:
       - backend
     ports:
-      - '90:80'
+      - '${NGINX_PORT}:80'
+    volumes:
+      - ./source:/var/www/html/
+    container_name: phuctt-nginx
     restart: always
   php:
     build:
@@ -17,19 +20,26 @@ services:
     networks:
       - backend
     volumes:
+      - ./source:/var/www/html/
       - ./Docker/php/config/config.ini:/usr/local/etc/php/conf.d/uploads.ini
+    container_name: phuctt-php
     restart: always
+
+    user: phuc:phuc
   mysql:
     image: mysql
+    volumes:
+      - ./source:/var/www/html/
     networks:
       - backend
     ports:
-      - '3309:3300'
+      - '${DB_CONTAINER_PORT}:3306'
     environment:
-      MYSQL_DATABASE: 'test'
-      MYSQL_USER: 'miichi'
-      MYSQL_PASSWORD: '123456'
-      MYSQL_ROOT_PASSWORD: '123456'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+    container_name: phuctt-mysql
     restart: always
 
 networks:
