@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  app:
+    container_name: project-laravel
+    build:
+      context: ./Docker
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html/Demo-Docker
+    working_dir: /var/www/html/Demo-Docker
+    links:
+      - mysql
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_project
+    ports:
+      - "8010:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+    links:
+      - app
+  mysql:
+    image: mysql:5.7
+    container_name: mysql_project
+    ports:
+      - 33307:3306
+    environment:
+      MYSQL_DATABASE: test_project
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    restart: always
